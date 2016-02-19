@@ -29,9 +29,7 @@ int main(int argc, char* argv[]){
 	gtype_real64 volts[MAX_NUM_MEASUREMENTS];
 	gtype_real64 calbMeasurements[MAX_NUM_MEASUREMENTS];
 	gtype_int32 numMeasurements, i;
-	gtype_real64 averageCalbMeasurement;
 	gtype_real64 measureperiod = 0.004;
-	char units[20];
 	gtype_uint16 MajorVersion;
 	gtype_uint16 MinorVersion;
 
@@ -46,11 +44,10 @@ int main(int argc, char* argv[]){
 		GOIO_SENSOR_HANDLE hDevice = GoIO_Sensor_Open(deviceName, vendorId, productId, 0);
 		if(hDevice != NULL){
 			printf("Sensor Opened Succesfully \n");
-			unsigned char charId;
 			//Preparing to collect data from the device
 			GoIO_Sensor_SetMeasurementPeriod(hDevice,measureperiod,SKIP_TIMEOUT_MS_DEFAULT);
 			GoIO_Sensor_SendCmdAndGetResponse(hDevice, SKIP_CMD_ID_START_MEASUREMENTS,NULL,0,NULL,NULL,SKIP_TIMEOUT_MS_DEFAULT);
-			OSSleep(5000);
+			OSSleep(8000);
 			numMeasurements = GoIO_Sensor_ReadRawMeasurements(hDevice, rawMeasurements, MAX_NUM_MEASUREMENTS);
 			printf("Recorded %d measurements \n", numMeasurements);
 			// Begin outputting data to file to be processed further
